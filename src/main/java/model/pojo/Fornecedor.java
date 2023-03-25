@@ -5,12 +5,9 @@
 package model.pojo;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  *
@@ -21,28 +18,16 @@ import javax.persistence.Table;
 public class Fornecedor implements Serializable{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column (name = "idfornecedor", unique = true, nullable = false)
     private int idFornecedor;
-    @Column (name = "cnpj")
     private String cnpj;
-    @Column (name = "cpf")
     private String cpf;
-    @Column (name = "rg")
     private String rg;
-    @Column (name = "data_nasc")
     private String data_nasc;
-    @Column (name = "nome")
     private String nome;
-    @Column (name = "email")
     private String email;
-    @Column (name = "cep")
     private String cep;
-    @Column (name = "uf")
     private String uf;
-    @Column (name = "cidade")
     private String cidade;
-    @Column (name = "logradouro")
     private String logradouro;
     
     public Fornecedor(){

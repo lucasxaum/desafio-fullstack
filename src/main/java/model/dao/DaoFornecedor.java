@@ -2,9 +2,9 @@ package model.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
-import javax.persistence.Query;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
+import jakarta.persistence.Query;
 import model.pojo.Fornecedor;
 
 /*
@@ -12,24 +12,28 @@ import model.pojo.Fornecedor;
  */
 public class DaoFornecedor extends DaoBase{
     
-    public List<Fornecedor> buscarFornecedores(Fornecedor fornecedor) {
+    public List<Fornecedor> buscarFornecedores(Fornecedor empresa) {
         EntityManager em = super.getEntityManager();
         try {
-            String strSQL = "SELECT f FROM fornecedor ";
-            if (fornecedor.getCNPJ() != null) {
-                strSQL += "WHERE f.cnpj='" + fornecedor.getCNPJ() + "' ";
-            } else if (fornecedor.getCPF() != null) {
-                strSQL += "WHERE f.cpf='" + fornecedor.getCPF() + "' ";
-            } else if (fornecedor.getNome() != null) {
-                strSQL += "WHERE c.nome LIKE '" + fornecedor.getNome() + "%' ";
+            String strSQL = "SELECT * FROM empresa ";
+            if (empresa.getCNPJ() != null) {
+                strSQL += "WHERE e.cnpj='" + empresa.getCNPJ() + "' ";
+            } else if (empresa.getNome() != null) {
+                strSQL += "WHERE e.nomeFant LIKE '" + empresa.getNome() + "%' ";
             }
-            strSQL += "ORDER BY NOME ASC";
             em.getTransaction().begin();
 
-            Query query = em.createQuery(strSQL);
-
+            Query query = em.createNativeQuery(strSQL, Fornecedor.class);
+            List<Fornecedor> teste = query.getResultList();
+           
+            for (Fornecedor casa: teste){
+                System.out.println("CNPJ: " + casa.getCNPJ());
+                System.out.println("NomeFant.: " + casa.getNome());
+            }
+            
             return (List<Fornecedor>) query.getResultList();
         } catch (PersistenceException e) {
+            System.out.println("Fornecedor Vazio");
             return null;
         } finally {
             em.close();

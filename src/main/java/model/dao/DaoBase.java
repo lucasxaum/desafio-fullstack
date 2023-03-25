@@ -1,9 +1,9 @@
 
 package model.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 
 //$("#cpfcnpj").keypress(function(){
@@ -48,7 +48,7 @@ public class DaoBase {
             em.merge(obj);
             em.getTransaction().commit();
             return obj;
-        } catch (javax.persistence.PersistenceException e) {
+        } catch (jakarta.persistence.PersistenceException e) {
             System.out.println(e.getMessage());
             return null;
         } finally {
@@ -73,7 +73,7 @@ public class DaoBase {
             obj = em.find(classe, codigo);
             em.getTransaction().commit();
             return obj;
-        } catch (javax.persistence.PersistenceException e) {
+        } catch (jakarta.persistence.PersistenceException e) {
             System.out.println(e.getMessage());
             return null;
         } finally {

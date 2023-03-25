@@ -56,11 +56,9 @@ public class DesafioFullStack {
      LocalDate anos = LocalDate.parse("1991-11-05");
      System.out.print("Idade: " + idade(anos));
      
-     Empresa empresa = new Empresa("11111111111111", "Empresa_1", null, null, null, null);
+     Empresa empresa = new Empresa(null, "Empresa", null, null, null, null);
      DaoEmpresa teste = new DaoEmpresa();
-     List<Empresa> casa;
-     casa = teste.buscarEmpresas(empresa);
-     System.out.println(casa);
+     List<Empresa> casa = teste.buscarEmpresas(empresa);
      GUIMain gp = new GUIMain();
      gp.setVisible(true);
    }

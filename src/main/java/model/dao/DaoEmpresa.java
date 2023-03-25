@@ -6,9 +6,9 @@ package model.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
-import javax.persistence.Query;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
+import jakarta.persistence.Query;
 import model.pojo.Empresa;
 
 /**
@@ -20,18 +20,25 @@ public class DaoEmpresa extends DaoBase{
     public List<Empresa> buscarEmpresas(Empresa empresa) {
         EntityManager em = super.getEntityManager();
         try {
-            String strSQL = "SELECT e FROM desafio_fullstack_acc.empresa e ";
+            String strSQL = "SELECT * FROM empresa ";
             if (empresa.getCNPJ() != null) {
-                strSQL += "WHERE e.cnpj='" + empresa.getCNPJ() + "' ";
+                strSQL += "WHERE cnpj='" + empresa.getCNPJ() + "' ";
             } else if (empresa.getNomeFant() != null) {
-                strSQL += "WHERE e.nomeFant LIKE '" + empresa.getNomeFant() + "%' ";
+                strSQL += "WHERE nomeFant LIKE '%" + empresa.getNomeFant() + "%' ";
             }
             em.getTransaction().begin();
 
-            Query query = em.createQuery(strSQL);
-
-            return (List<Empresa>) query.getResultList();
+            Query query = em.createNativeQuery(strSQL, Empresa.class);
+            List<Empresa> teste = query.getResultList();
+           
+            for (Empresa casa: teste){
+                System.out.println("CNPJ: " + casa.getCNPJ());
+                System.out.println("NomeFant.: " + casa.getNomeFant());
+            }
+            
+            return query.getResultList();
         } catch (PersistenceException e) {
+            System.out.println("Empresa Vazio");
             return null;
         } finally {
             em.close();
