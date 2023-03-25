@@ -20,13 +20,12 @@ public class DaoEmpresa extends DaoBase{
     public List<Empresa> buscarEmpresas(Empresa empresa) {
         EntityManager em = super.getEntityManager();
         try {
-            String strSQL = "SELECT e FROM empresa e ";
+            String strSQL = "SELECT e FROM desafio_fullstack_acc.empresa e ";
             if (empresa.getCNPJ() != null) {
                 strSQL += "WHERE e.cnpj='" + empresa.getCNPJ() + "' ";
             } else if (empresa.getNomeFant() != null) {
                 strSQL += "WHERE e.nomeFant LIKE '" + empresa.getNomeFant() + "%' ";
             }
-            strSQL += "ORDER BY NOME ASC";
             em.getTransaction().begin();
 
             Query query = em.createQuery(strSQL);

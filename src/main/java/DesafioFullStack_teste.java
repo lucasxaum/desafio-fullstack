@@ -2,19 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.accenture.desafiofullstack;
-
-/**
- *
- * @author User
- */
-//public class DesafioFullStack {
-//
-//    public static void main(String[] args) {
-//        System.out.println("Hello World!");
-//    }
-//}
-
 import java.io.*;
 import java.net.*;
 import java.time.LocalDate;
@@ -27,9 +14,10 @@ import java.util.List;
 
 import view.GUIMain;
 
-public class DesafioFullStack {
+public class DesafioFullStack_teste {
 
    public static String getHTML(String urlToRead) throws Exception {
+      System.out.println("AAAAAAAAAAAAAAAAA");
       StringBuilder result = new StringBuilder();
       URL url = new URL(urlToRead);
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -56,11 +44,11 @@ public class DesafioFullStack {
      LocalDate anos = LocalDate.parse("1991-11-05");
      System.out.print("Idade: " + idade(anos));
      
-     Empresa empresa = new Empresa("11111111111111", "Empresa_1", null, null, null, null);
-     DaoEmpresa teste = new DaoEmpresa();
-     List<Empresa> casa;
-     casa = teste.buscarEmpresas(empresa);
-     System.out.println(casa);
+     //Empresa empresa = new Empresa("11111111111111", "Empresa_1", null, null, null, null);
+     //DaoEmpresa teste = new DaoEmpresa();
+     //teste.buscarEmpresas(empresa);
+     //System.out.println(empresa.getCNPJ());
+     //System.out.println(teste);
      GUIMain gp = new GUIMain();
      gp.setVisible(true);
    }

@@ -5,6 +5,8 @@
 package controller;
 
 import java.util.List;
+import model.dao.DaoEmpresa;
+import model.pojo.Empresa;
 
 /**
  *
@@ -25,9 +27,9 @@ public class ControllerEmpresa {
      * @param cliente Cliente contendo os filtros de busca do cliente 
      * @return Chamada ao metodo buscar cliente no DaoCliente
      */
-    public static List<Cliente> buscarClientes(Cliente cliente) {
-        DaoCliente dao = new DaoCliente();
-        return dao.buscarClientes(cliente);
-    }
+//    public static List<Cliente> buscarClientes(Cliente cliente) {
+//        DaoCliente dao = new DaoCliente();
+//        return dao.buscarClientes(cliente);
+//    }
     
 }
