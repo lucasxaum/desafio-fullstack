@@ -28,5 +28,29 @@ O esquema do banco do dados (__desafio_fullstack_acc__) consta de 3 tabelas: __e
 |            | bairro       |               |
 |            | logradouro   |               |
 
+As figuras representam a modelagem das entidades e relacionamentos para o banco de dados.
+
+![Entidade-Relacionamento](https://raw.githubusercontent.com/lucasxaum/desafio-fullstack/6d71f59eea2fefc5becee9f1cdbd22f3f4f158e9/doc/ER-Entidade-Relacionamento.drawio.svg) 
+
+**Figura 1**: Diagrama de relação entre empresa e fornecedor.
+
+
+![Relacional (com herança)](https://raw.githubusercontent.com/lucasxaum/desafio-fullstack/6d71f59eea2fefc5becee9f1cdbd22f3f4f158e9/doc/ER-Relacional.drawio.svg)
+
+**Figura 2**: Diagrama relacional (com herança).
+
+
+![Relacional (normalizado)](https://raw.githubusercontent.com/lucasxaum/desafio-fullstack/6d71f59eea2fefc5becee9f1cdbd22f3f4f158e9/doc/ER-C%C3%B3pia%20do%20Relacional.drawio.svg)
+
+**Figura 3**: Diagrama relacional (normalizado).
+
+
 ### 1.3) **Interação back-end / BD**
-Para a interação entre as tais partes, foi adotado, o Hibernate como persistence. Esse realiza o mapeamento objeto-relacional.
+Para a interação entre as tais partes, foi adotado, o Hibernate como persistence.
+
+### 1.4) **Prototipagem**
+A figura 4 apresenta um protótipo 
+
+![Prototipo](https://github.com/lucasxaum/desafio-fullstack/blob/master/doc/ER-Prototipagem.jpg?raw=true)
+
+**Figura 4**: Prototipo.
