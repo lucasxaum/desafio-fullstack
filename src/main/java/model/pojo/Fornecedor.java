@@ -19,21 +19,22 @@ public class Fornecedor implements Serializable{
     
     @Id
     private int idFornecedor;
+    private String nome;
     private String cnpj;
     private String cpf;
     private String rg;
     private String data_nasc;
-    private String nome;
     private String email;
     private String cep;
     private String uf;
     private String cidade;
+    private String bairro;
     private String logradouro;
     
     public Fornecedor(){
     }
     
-    public Fornecedor(String cnpj, String cpf, String rg, String data_nasc, String nome, String cep, String uf, String cidade, String logradouro) {
+    public Fornecedor(String cnpj, String cpf, String rg, String data_nasc, String nome, String cep, String uf, String cidade, String bairro, String logradouro) {
         this.cnpj       = cnpj;
         this.cpf        = cpf;
         this.rg         = rg;
@@ -42,10 +43,29 @@ public class Fornecedor implements Serializable{
         this.cep        = cep;
         this.uf         = uf;
         this.cidade     = cidade;
+        this.bairro     = bairro;
+        this.logradouro = logradouro;
+    }
+    
+    public Fornecedor(int id, String cnpj, String cpf, String rg, String data_nasc, String nome, String cep, String uf, String cidade, String bairro, String logradouro) {
+        this.idFornecedor = id;
+        this.cnpj       = cnpj;
+        this.cpf        = cpf;
+        this.rg         = rg;
+        this.data_nasc  = data_nasc;
+        this.nome       = nome;
+        this.cep        = cep;
+        this.uf         = uf;
+        this.cidade     = cidade;
+        this.bairro     = bairro;
         this.logradouro = logradouro;
     }
        
     // GETTERS ----------
+    public int getID(){
+        return this.idFornecedor;
+    }
+    
     public String getCNPJ(){
         return this.cnpj;
     }
@@ -82,11 +102,19 @@ public class Fornecedor implements Serializable{
         return this.cidade;
     }
     
+    public String getBairro(){
+        return this.bairro;
+    }
+    
     public String getLogradouro(){
         return this.logradouro;
     }
     
     // SETTERS ----------
+    public void setID(int id){
+        this.idFornecedor = id;
+    }
+    
     public void setCNPJ(String cnpj){
         this.cnpj = cnpj;
     }
@@ -113,5 +141,21 @@ public class Fornecedor implements Serializable{
     
     public void setCEP(String cep){
         this.cep = cep;
+    }
+    
+    public void setUF(String uf){
+        this.uf = uf;
+    }
+    
+    public void getCidade(String cidade){
+        this.cidade = cidade;
+    }
+    
+    public void getBairro(String bairro){
+        this.bairro = bairro;
+    }
+    
+    public void getLogradouro(String logradouro){
+        this.logradouro = logradouro;
     }
 }

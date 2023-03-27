@@ -7,6 +7,7 @@ package controller;
 import java.util.List;
 import model.dao.DaoEmpresa;
 import model.pojo.Empresa;
+import model.pojo.Fornecedor;
 
 /**
  *
@@ -14,22 +15,26 @@ import model.pojo.Empresa;
  */
 public class ControllerEmpresa {
     
-    public static boolean salvarEmpresa(Empresa empresa) {
+    public boolean salvarEmpresa(Empresa empresa) {
         DaoEmpresa dao = new DaoEmpresa();
-        if(dao.salvar(empresa) !=null){
-            return true;
-        }else{
-            return false;
-        }
+        return dao.criar(empresa) != 0;
     }
-    /**
-     * 
-     * @param cliente Cliente contendo os filtros de busca do cliente 
-     * @return Chamada ao metodo buscar cliente no DaoCliente
-     */
-//    public static List<Cliente> buscarClientes(Cliente cliente) {
-//        DaoCliente dao = new DaoCliente();
-//        return dao.buscarClientes(cliente);
-//    }
     
+    public List<Empresa> listar(String cnpj, String nome){
+        Empresa emp = new Empresa();
+        emp.setCNPJ(cnpj);
+        emp.setNomeFant(nome);
+        
+        DaoEmpresa banco_empresa = new DaoEmpresa();
+        return banco_empresa.buscar(emp);
+    }
+    
+    public List<Fornecedor> obterFornecedores(String cnpj, String nome){
+        Empresa emp = new Empresa();
+        emp.setCNPJ(cnpj);
+        emp.setNomeFant(nome);
+        
+        DaoEmpresa banco_empresa = new DaoEmpresa();
+        return banco_empresa.obterFornecedores(emp);
+    }
 }

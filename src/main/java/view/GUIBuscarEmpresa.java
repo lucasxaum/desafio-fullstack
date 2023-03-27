@@ -4,17 +4,27 @@
  */
 package view;
 
+import controller.ControllerEmpresa;
+import java.util.List;
+import java.util.Locale;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import model.pojo.Empresa;
+
 /**
  *
  * @author User
  */
-public class GUIBuscarEmpresa extends javax.swing.JInternalFrame {
+public class GUIBuscarEmpresa extends javax.swing.JFrame {
 
     /**
      * Creates new form GUIBuscarEmpresa
      */
-    public GUIBuscarEmpresa() {
+    public GUIBuscarEmpresa(String dataNasc) {
         initComponents();
+        this.dataNasc = dataNasc;
     }
 
     /**
@@ -28,12 +38,14 @@ public class GUIBuscarEmpresa extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNomeFant = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtCNPJ = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaEmpresa = new javax.swing.JTable();
+        buttonConfirmar = new javax.swing.JButton();
+        buttonCancelar = new javax.swing.JButton();
 
         setTitle("Buscar Empresa");
 
@@ -41,19 +53,21 @@ public class GUIBuscarEmpresa extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nome:");
 
-        jTextField1.setEditable(false);
-        jTextField1.setText("Nome Fantasia");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtNomeFant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtNomeFantActionPerformed(evt);
             }
         });
 
         jLabel2.setText("CNPJ:");
 
-        jTextField2.setText("CNPJ");
+        txtCNPJ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCNPJActionPerformed(evt);
+            }
+        });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/lupa.png"))); // NOI18N
+        jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -67,15 +81,16 @@ public class GUIBuscarEmpresa extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtNomeFant, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                    .addComponent(txtCNPJ))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
@@ -88,39 +103,55 @@ public class GUIBuscarEmpresa extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNomeFant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         jScrollPane1.setAutoscrolls(true);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaEmpresa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "", "Nome Fantasia", "CNPJ", "CEP"
+                "", "Nome Fantasia", "CNPJ", "CEP", "UF", "Cidade", "Bairro", "Logradouro"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(tabelaEmpresa);
+
+        buttonConfirmar.setText("Confirmar");
+        buttonConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonConfirmarActionPerformed(evt);
+            }
+        });
+
+        buttonCancelar.setText("Cancelar");
+        buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,6 +163,12 @@ public class GUIBuscarEmpresa extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +177,11 @@ public class GUIBuscarEmpresa extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(buttonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -148,21 +189,90 @@ public class GUIBuscarEmpresa extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        ControllerEmpresa controle = new ControllerEmpresa();
+        if (this.txtCNPJ.getText().equals("")){
+            System.out.println("Espaço");
+        } else if (this.txtCNPJ.getText() == null) {
+            System.out.println("vazio");
+        }
+        List<Empresa> lista = controle.listar(this.txtCNPJ.getText(), this.txtNomeFant.getText());
+        
+        DefaultTableModel model = (DefaultTableModel) tabelaEmpresa.getModel();
+        System.out.println("A " + this.txtCNPJ.getText());
+        
+        model.setRowCount(0);
+        String[] s = new String[8];
+        for(Empresa empresa: lista) {
+            s[1] = empresa.getNomeFant();
+            s[2] = empresa.getCNPJ();
+            s[3] = empresa.getCEP();
+            s[4] = empresa.getUF();
+            s[5] = empresa.getCidade();
+            s[6] = empresa.getBairro();
+            s[7] = empresa.getLogradouro();
+            model.addRow(s);
+        }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtNomeFantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeFantActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtNomeFantActionPerformed
 
+    private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
+        // TODO add your handling code here:
+        Locale locale = new Locale("pt","BR");
+        JOptionPane.setDefaultLocale(locale);
+        
+        UIManager.put("OptionPane.cancelButtonText", "Cancelar");
+        UIManager.put("OptionPane.noButtonText", "Não");
+        UIManager.put("OptionPane.okButtonText", "OK");
+        UIManager.put("OptionPane.yesButtonText", "Sim");
+    
+        int input = JOptionPane.showConfirmDialog(null, "Deseja cancelar a seleção de empresas?", "Seleção de empresas", JOptionPane.YES_NO_OPTION);
+        System.out.println("Entrada: " + input);
+        switch(input) {
+            case 0:
+                this.dispose();
+                break;
+            case 1, 2:
+                break;
+            default:
+                break;
+        }
 
+    }//GEN-LAST:event_buttonCancelarActionPerformed
+
+    private void txtCNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCNPJActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCNPJActionPerformed
+
+    private void buttonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConfirmarActionPerformed
+        // TODO add your handling code here:
+        try {
+           int qtd_linhas = tabelaEmpresa.getRowCount();
+           
+            TableModel modelo = tabelaEmpresa.getModel();
+            for (int index = 0; index < qtd_linhas; index++){
+                System.out.println(modelo.getValueAt(index, 0));
+            }
+        } catch(java.lang.ArrayIndexOutOfBoundsException e){
+            System.out.print("Fora de alcance na tabela.");
+        }
+    }//GEN-LAST:event_buttonConfirmarActionPerformed
+
+    private String dataNasc;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonCancelar;
+    private javax.swing.JButton buttonConfirmar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tabelaEmpresa;
+    private javax.swing.JTextField txtCNPJ;
+    private javax.swing.JTextField txtNomeFant;
     // End of variables declaration//GEN-END:variables
 }

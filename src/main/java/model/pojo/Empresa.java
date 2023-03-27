@@ -4,13 +4,11 @@ package model.pojo;
 import java.io.Serializable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-//import jakarta.persistence.Inheritance;
-//import jakarta.persistence.InheritanceType;
-//import jakarta.persistence.OneToMany;
-//import jakarta.persistence.PostPersist;
-//import jakarta.persistence.PostUpdate;
-//import jakarta.persistence.Table;
+import java.util.Set;
 
 /**
  *
@@ -22,17 +20,28 @@ public class Empresa implements Serializable{
     
     @Id
     private int idEmpresa;
-    private String cnpj;
     private String nomeFant;
+    private String cnpj;
     private String cep;
     private String uf;
     private String cidade;
+    private String bairro;
     private String logradouro;
     
     public Empresa(){
     }
     
-    public Empresa(String cnpj, String nomeFant, String cep, String uf, String cidade, String logradouro) {
+    public Empresa(String cnpj, String nomeFant, String cep, String uf, String cidade, String bairro, String logradouro) {
+        this.cnpj       = cnpj;
+        this.nomeFant   = nomeFant;
+        this.cep        = cep;
+        this.uf         = uf;
+        this.cidade     = cidade;
+        this.logradouro = logradouro;
+    }
+    
+    public Empresa(int id, String cnpj, String nomeFant, String cep, String uf, String cidade, String bairro, String logradouro) {
+        this.idEmpresa  = id;
         this.cnpj       = cnpj;
         this.nomeFant   = nomeFant;
         this.cep        = cep;
@@ -42,7 +51,7 @@ public class Empresa implements Serializable{
     }
     
     // GETTERS ----------
-    public int getIdEmpresa(){
+    public int getID(){
         return this.idEmpresa;
     }
     
@@ -66,11 +75,20 @@ public class Empresa implements Serializable{
         return this.cidade;
     }
     
+    public String getBairro(){
+        return this.bairro;
+    }
+    
     public String getLogradouro(){
         return this.logradouro;
     }
     
     // SETTERS ----------
+    
+    public void setID(int id){
+        this.idEmpresa = id;
+    }
+    
     public void setCNPJ(String cnpj){
         this.cnpj = cnpj;
     }
@@ -89,6 +107,10 @@ public class Empresa implements Serializable{
     
     public void setCidade(String cidade){
         this.cidade = cidade;
+    }
+    
+    public void setBairro(String bairro){
+        this.bairro = bairro;
     }
     
     public void setLogradouro(String logradouro){

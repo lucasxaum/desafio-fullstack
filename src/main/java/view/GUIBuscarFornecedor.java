@@ -8,7 +8,7 @@ package view;
  *
  * @author User
  */
-public class GUIBuscarFornecedor extends javax.swing.JInternalFrame {
+public class GUIBuscarFornecedor extends javax.swing.JFrame {
 
     /**
      * Creates new form GUIBuscarFornecedor
